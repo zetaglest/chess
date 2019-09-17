@@ -1,0 +1,87 @@
+<?xml version="1.0" standalone="yes" ?>
+<scenario>
+--Name: chess
+--URL: https://github.com/zetaglest/chess
+--Description: 2 player chess with Indian faction on a 64x64 map
+--Goal: Your fire golem must survive
+--By Andy Alt
+--License: GNU GPLv3
+<difficulty value="4"/>
+<players>
+	<player control="human" faction="indian" team="1"/>
+	<player control="network" faction="indian" team="2"/>
+
+</players>
+<map value="forest_for_four"/>
+<tileset value="autumn"/>
+<tech-tree value="megapack"/>
+	<default-resources value="true"/>
+	<default-units value="false"/>
+	<default-victory-conditions value="false"/>
+	--<fog-of-war value="false"/>
+
+	<scripts>
+		<startup>
+
+			NumOfStickfighters=8
+			NumOfFireArchers=2
+			NumOfSpearmen=2
+			NumOfHorsemen=2
+			NumOfFireGolems=1
+			NumOfThunderbirds=1
+
+
+
+
+
+			for playerNum=0, 1 do
+				for i=1, NumOfStickfighters do
+					createUnit('stickfighter', playerNum, startLocation(playerNum))
+				end
+			end
+
+			for playerNum=0, 1 do
+				for i=1, NumOfFireArchers do
+					createUnit('fire_archer', playerNum, startLocation(playerNum))
+				end
+			end
+
+			for playerNum=0, 1 do
+				for i=1, NumOfHorsemen do
+					createUnit('horseman', playerNum, startLocation(playerNum))
+				end
+			end
+
+			for playerNum=0, 1 do
+				for i=1, NumOfSpearmen do
+					createUnit('spearman', playerNum, startLocation(playerNum))
+				end
+			end
+
+			for playerNum=0, 1 do
+				for i=1, NumOfFireGolems do
+					createUnit('fire_golem', playerNum, startLocation(playerNum))
+				end
+			end
+
+			for playerNum=0, 1 do
+				for i=1, NumOfThunderbirds do
+					createUnit('thunderbird', playerNum, startLocation(playerNum))
+				end
+			end
+
+
+
+		</startup>
+
+
+		<unitDied>
+
+			--
+
+		</unitDied>
+
+
+
+	</scripts>
+</scenario>
