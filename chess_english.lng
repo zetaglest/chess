@@ -3,7 +3,7 @@ SCENARIO_NAME=Chess
 Chess=Chess
 
 ;message strings
-game_brief=Kill your opponent's king. Your king must survive! (The Golem's are the kings.)
+game_brief=Kill your opponent's king. Your king must survive! (The fire golems are the kings.)
 
 ;objective strings
 
