@@ -1,0 +1,9 @@
+SCENARIO_NAME=Chess
+;message headers
+Chess=Chess
+
+;message strings
+game_brief=Kill your opponent's king. Your king must survive! (The Golem's are the kings.)
+
+;objective strings
+

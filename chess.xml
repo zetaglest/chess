@@ -23,61 +23,87 @@
 	<scripts>
 		<startup>
 
-			NumOfStickfighters=8
-			NumOfFireArchers=2
-			NumOfSpearmen=2
-			NumOfHorsemen=2
-			NumOfFireGolems=1
-			NumOfThunderbirds=1
-
-
-
-
-
-			for playerNum=0, 1 do
-				for i=1, NumOfStickfighters do
-					createUnit('stickfighter', playerNum, startLocation(playerNum))
+			-- Create non-king "chess" pieces.
+			function createUnits(unitTable, numPlayers)
+				for playerNum=0,numPlayers-1
+				do
+					for unit, count in pairs(unitTable)
+					do
+						for _=0,count-1
+						do
+							createUnit(unit, playerNum, startLocation(playerNum))
+						end
+					end
 				end
 			end
 
-			for playerNum=0, 1 do
-				for i=1, NumOfFireArchers do
-					createUnit('fire_archer', playerNum, startLocation(playerNum))
+			-- Create the kings.
+			function createKings(unit, numPlayers)
+				kings = {}
+				for playerNum=0,numPlayers-1
+				do
+					createUnit(unit, playerNum, startLocation(playerNum))
+					kings[playerNum] = lastCreatedUnit()
 				end
+				return kings
 			end
 
-			for playerNum=0, 1 do
-				for i=1, NumOfHorsemen do
-					createUnit('horseman', playerNum, startLocation(playerNum))
-				end
+			-- Create all pieces.
+			function createAll(startUnits, kingUnit, numPlayers)
+				kings = createKings(kingUnit, numPlayers)
+				createUnits(startUnits, numPlayers)
+				return kings
 			end
 
-			for playerNum=0, 1 do
-				for i=1, NumOfSpearmen do
-					createUnit('spearman', playerNum, startLocation(playerNum))
-				end
-			end
+			-- List of start pieces (except the king).
+			startUnits = {
+				thunderbird=1,
+				stickfighter=8,
+				fire_archer=2,
+				spearman=2,
+				horseman=2,
+			}
 
-			for playerNum=0, 1 do
-				for i=1, NumOfFireGolems do
-					createUnit('fire_golem', playerNum, startLocation(playerNum))
-				end
-			end
+			-- Number of players
+			nPlayers = 2
 
-			for playerNum=0, 1 do
-				for i=1, NumOfThunderbirds do
-					createUnit('thunderbird', playerNum, startLocation(playerNum))
-				end
-			end
+			-- Create all the units and store a table of kings (firegolems).
+			kings = createAll(startUnits, "fire_golem", nPlayers)
 
+            -- Used later to determine the end of the game.
+			playersLeft = nPlayers
 
-
+            -- Tell the player what to do.
+            showMessage('game_brief', 'Chess')
 		</startup>
 
 
 		<unitDied>
 
-			--
+			unitKilled = lastDeadUnit()
+
+			for player, king in pairs(kings)
+			do
+                -- Check if the killed unit is the king.
+				if unitKilled == king
+				then
+                    -- Delete the killed king.
+					kings[player] = nil
+                    -- Decrement the number of remaining players.
+					playersLeft = playersLeft - 1
+				end
+			end
+
+            -- Set the winner if there's only 1 player alive.
+			if playersLeft == 1
+			then
+				for player, king in pairs(kings)
+				do
+					clearDisplayText()
+					setPlayerAsWinner(player)
+					endGame()
+				end
+			end
 
 		</unitDied>
 
