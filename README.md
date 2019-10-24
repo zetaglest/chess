@@ -1,7 +1,7 @@
 # chess
 @MegaGlest network (multi-player) scenario
 
-This scenario is wip and not playable yet.
+The aim is to kill your opponent's king (fire golem). The last player with a king wins.
 
 Each player starts out with 16 "pieces":
 
