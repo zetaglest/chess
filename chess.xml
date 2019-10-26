@@ -37,17 +37,6 @@
 				end
 			end
 
-			-- Create the kings.
-			function createKings(unit, numPlayers)
-				kings = {}
-				for playerNum=0,numPlayers-1
-				do
-					createUnit(unit, playerNum, startLocation(playerNum))
-					kings[playerNum] = lastCreatedUnit()
-				end
-				return kings
-			end
-
 			-- Create all pieces.
 			function createAll(startUnits, kingUnit, numPlayers)
 				kings = createKings(kingUnit, numPlayers)
@@ -67,14 +56,22 @@
 			-- Number of players
 			nPlayers = 2
 
-			-- Create all the units and store a table of kings (firegolems).
-			kings = createAll(startUnits, "fire_golem", nPlayers)
+			-- Create the kings (fire golems).
+            kings = {}
+			for playerNum=0,nPlayers-1
+			do
+				createUnit("fire_golem", playerNum, startLocation(playerNum))
+				kings[playerNum] = lastCreatedUnit()
+			end
 
-            -- Used later to determine the end of the game.
+			-- Create other pieces.
+			createUnits(startUnits, nPlayers)
+
+			-- Used later to determine the end of the game.
 			playersLeft = nPlayers
 
-            -- Tell the player what to do.
-            showMessage('game_brief', 'Chess')
+			-- Tell the player what to do.
+			showMessage('game_brief', 'Chess')
 		</startup>
 
 
@@ -84,17 +81,17 @@
 
 			for player, king in pairs(kings)
 			do
-                -- Check if the killed unit is the king.
+				-- Check if the killed unit is the king.
 				if unitKilled == king
 				then
-                    -- Delete the killed king.
+					-- Delete the killed king.
 					kings[player] = nil
-                    -- Decrement the number of remaining players.
+					-- Decrement the number of remaining players.
 					playersLeft = playersLeft - 1
 				end
 			end
 
-            -- Set the winner if there's only 1 player alive.
+			-- Set the winner if there's only 1 player alive.
 			if playersLeft == 1
 			then
 				for player, king in pairs(kings)
