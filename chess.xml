@@ -10,7 +10,8 @@
 <players>
 	<player control="human" faction="indian" team="1"/>
 	<player control="network" faction="indian" team="2"/>
-
+	<player control="closed"/>
+	<player control="closed"/>
 </players>
 <map value="forest_for_four"/>
 <tileset value="autumn"/>
