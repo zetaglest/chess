@@ -24,35 +24,11 @@
 	<scripts>
 		<startup>
 
-			-- Create non-king "chess" pieces.
-			function createUnits(unitTable, numPlayers)
-				for playerNum=0,numPlayers-1
-				do
-					for unit, count in pairs(unitTable)
-					do
-						for _=0,count-1
-						do
-							createUnit(unit, playerNum, startLocation(playerNum))
-						end
-					end
-				end
-			end
-
 			-- Create all pieces.
 			function createAll(startUnits, kingUnit, numPlayers)
 				kings = createKings(kingUnit, numPlayers)
-				createUnits(startUnits, numPlayers)
 				return kings
 			end
-
-			-- List of start pieces (except the king).
-			startUnits = {
-				thunderbird=1,
-				stickfighter=8,
-				fire_archer=2,
-				spearman=2,
-				horseman=2,
-			}
 
 			-- Number of players
 			nPlayers = 2
@@ -65,8 +41,20 @@
 				kings[playerNum] = lastCreatedUnit()
 			end
 
-			-- Create other pieces.
-			createUnits(startUnits, nPlayers)
+			for playerNum=0, nPlayers-1
+			do
+				for stickfighters=0, 7
+				do
+					createUnit("stickfighter", playerNum, startLocation(playerNum))
+				end
+				createUnit("fire_archer", playerNum, startLocation(playerNum))
+				createUnit("fire_archer", playerNum, startLocation(playerNum))
+				createUnit("spearman", playerNum, startLocation(playerNum))
+				createUnit("spearman", playerNum, startLocation(playerNum))
+				createUnit("horseman", playerNum, startLocation(playerNum))
+				createUnit("horseman", playerNum, startLocation(playerNum))
+				createUnit("thunderbird", playerNum, startLocation(playerNum))
+			end
 
 			-- Used later to determine the end of the game.
 			playersLeft = nPlayers
